@@ -4,11 +4,11 @@ import unluac.decompile.CloseType;
 import unluac.decompile.Decompiler;
 import unluac.decompile.Output;
 import unluac.decompile.statement.Statement;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class DoEndBlock extends ContainerBlock {
 
-  public DoEndBlock(LFunction function, int begin, int end) {
+  public DoEndBlock(LuaFunction function, int begin, int end) {
     super(function, begin, end, CloseType.NONE, -1, 1);
   }
 

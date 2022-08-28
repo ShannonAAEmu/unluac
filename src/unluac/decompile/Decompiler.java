@@ -37,13 +37,13 @@ import unluac.decompile.target.TableTarget;
 import unluac.decompile.target.Target;
 import unluac.decompile.target.UpvalueTarget;
 import unluac.decompile.target.VariableTarget;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 import unluac.parse.LUpvalue;
 import unluac.util.Stack;
 
 public class Decompiler {
   
-  public final LFunction function;
+  public final LuaFunction function;
   public final Code code;
   public final Declaration[] declList;
   
@@ -52,7 +52,7 @@ public class Decompiler {
   private final Upvalues upvalues;
   
   private final Function f;
-  private final LFunction[] functions;  
+  private final LuaFunction[] functions;
   private final int params;
   private final int vararg;
   
@@ -63,11 +63,11 @@ public class Decompiler {
     private boolean[] labels;
   }
   
-  public Decompiler(LFunction function) {
+  public Decompiler(LuaFunction function) {
     this(function, null, -1);
   }
   
-  public Decompiler(LFunction function, Declaration[] parentDecls, int line) {
+  public Decompiler(LuaFunction function, Declaration[] parentDecls, int line) {
     this.f = new Function(function);
     this.function = function;
     registers = function.maximumStackSize;
@@ -716,7 +716,7 @@ public class Decompiler {
       case CLOSE:
         break;
       case CLOSURE: {
-        LFunction f = functions[Bx];
+        LuaFunction f = functions[Bx];
         operations.add(new RegisterSet(line, A, new ClosureExpression(f, line + 1)));
         if(function.header.version.upvaluedeclarationtype.get() == Version.UpvalueDeclarationType.INLINE) {
           // Handle upvalue declarations

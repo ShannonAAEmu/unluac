@@ -8,7 +8,7 @@ import unluac.decompile.Walker;
 import unluac.decompile.expression.Expression;
 import unluac.decompile.statement.Statement;
 import unluac.decompile.target.Target;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 abstract public class ForBlock extends ContainerBlock {
 
@@ -20,7 +20,7 @@ abstract public class ForBlock extends ContainerBlock {
   protected Expression stop;
   protected Expression step;
   
-  public ForBlock(LFunction function, int begin, int end, int register, CloseType closeType, int closeLine, boolean forvarClose) {
+  public ForBlock(LuaFunction function, int begin, int end, int register, CloseType closeType, int closeLine, boolean forvarClose) {
     super(function, begin, end, closeType, closeLine, -1);
     this.register = register;
     this.forvarClose = forvarClose;

@@ -51,13 +51,14 @@ class LConstantType50 extends LConstantType {
                     break;
             }
         }
+        LNumberType.setIsIntegral(false);
         switch (type) {
             case 0:
                 return LNil.NIL;
             case 1:
                 return header.bool.parse(buffer, header);
             case 3:
-                if (header.x64) {
+                if (header.isX64()) {
                     return header.lfloat.parse(buffer, header);
                 } else {
                     return header.number.parse(buffer, header);
@@ -65,7 +66,7 @@ class LConstantType50 extends LConstantType {
             case 4:
                 return header.string.parse(buffer, header);
             case 254:
-                LNumberType.isIntegral = true;
+                LNumberType.setIsIntegral(true);
                 return header.linteger.parse(buffer, header);
             default:
                 throw new IllegalStateException();

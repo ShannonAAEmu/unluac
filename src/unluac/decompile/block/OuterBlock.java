@@ -5,11 +5,11 @@ import unluac.decompile.Decompiler;
 import unluac.decompile.Output;
 import unluac.decompile.statement.Return;
 import unluac.decompile.statement.Statement;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class OuterBlock extends ContainerBlock {
 
-  public OuterBlock(LFunction function, int length) {
+  public OuterBlock(LuaFunction function, int length) {
     super(function, 0, length + 1, CloseType.NONE, -1, -2);
   }
   

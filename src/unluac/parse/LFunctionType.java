@@ -10,7 +10,7 @@ import unluac.Version;
 import unluac.assemble.Directive;
 
 
-abstract public class LFunctionType extends BObjectType<LFunction> {
+abstract public class LFunctionType extends BObjectType<LuaFunction> {
   
   public static LFunctionType get(Version.FunctionType type) {
     switch(type) {
@@ -35,7 +35,7 @@ abstract public class LFunctionType extends BObjectType<LFunction> {
     int length;
     int[] code;
     BList<LObject> constants;
-    BList<LFunction> functions;
+    BList<LuaFunction> functions;
     BList<BInteger> lines;
     BList<LAbsLineInfo> abslineinfo;
     BList<LLocal> locals;
@@ -43,7 +43,7 @@ abstract public class LFunctionType extends BObjectType<LFunction> {
   }
   
   @Override
-  public LFunction parse(ByteBuffer buffer, BHeader header) {
+  public LuaFunction parse(ByteBuffer buffer, BHeader header) {
     if(header.debug) {
       System.out.println("-- beginning to parse function");
     }
@@ -60,8 +60,8 @@ abstract public class LFunctionType extends BObjectType<LFunction> {
     if(s.abslineinfo != null) {
       abslineinfo = s.abslineinfo.asArray(new LAbsLineInfo[s.abslineinfo.length.asInt()]);
     }
-    LFunction lfunc = new LFunction(header, s.name, s.lineBegin, s.lineEnd, s.code, lines, abslineinfo, s.locals.asArray(new LLocal[s.locals.length.asInt()]), s.constants.asArray(new LObject[s.constants.length.asInt()]), s.upvalues, s.functions.asArray(new LFunction[s.functions.length.asInt()]), s.maximumStackSize, s.lenUpvalues, s.lenParameter, s.vararg);
-    for(LFunction child : lfunc.functions) {
+    LuaFunction lfunc = new LuaFunction(header, s.name, s.lineBegin, s.lineEnd, s.code, lines, abslineinfo, s.locals.asArray(new LLocal[s.locals.length.asInt()]), s.constants.asArray(new LObject[s.constants.length.asInt()]), s.upvalues, s.functions.asArray(new LuaFunction[s.functions.length.asInt()]), s.maximumStackSize, s.lenUpvalues, s.lenParameter, s.vararg);
+    for(LuaFunction child : lfunc.functions) {
       child.parent = lfunc;
     }
     if(s.lines.length.asInt() == 0 && s.locals.length.asInt() == 0) {
@@ -88,7 +88,7 @@ abstract public class LFunctionType extends BObjectType<LFunction> {
     }
   }
   
-  protected void write_code(OutputStream out, BHeader header, LFunction object) throws IOException {
+  protected void write_code(OutputStream out, BHeader header, LuaFunction object) throws IOException {
     header.integer.write(out, header, new BInteger(object.code.length));
     for(int i = 0; i < object.code.length; i++) {
       int codepoint = object.code[i];
@@ -117,7 +117,7 @@ abstract public class LFunctionType extends BObjectType<LFunction> {
     s.functions = header.function.parseList(buffer, header);
   }
   
-  protected void write_constants(OutputStream out, BHeader header, LFunction object) throws IOException {
+  protected void write_constants(OutputStream out, BHeader header, LuaFunction object) throws IOException {
     header.constant.writeList(out, header, object.constants);
     header.function.writeList(out, header, object.functions);
   }
@@ -135,7 +135,7 @@ abstract public class LFunctionType extends BObjectType<LFunction> {
     s.upvalues = upvalues.asArray(new LUpvalue[s.lenUpvalues]);
   }
   
-  protected void write_upvalues(OutputStream out, BHeader header, LFunction object) throws IOException {
+  protected void write_upvalues(OutputStream out, BHeader header, LuaFunction object) throws IOException {
     header.upvalue.writeList(out, header, object.upvalues);
   }
   
@@ -158,7 +158,7 @@ abstract public class LFunctionType extends BObjectType<LFunction> {
     }
   }
   
-  protected void write_debug(OutputStream out, BHeader header, LFunction object) throws IOException {
+  protected void write_debug(OutputStream out, BHeader header, LuaFunction object) throws IOException {
     header.integer.write(out, header, new BInteger(object.lines.length));
     for(int i = 0; i < object.lines.length; i++) {
       header.integer.write(out, header, new BInteger(object.lines[i]));
@@ -209,7 +209,7 @@ class LFunctionType50 extends LFunctionType {
   }
   
   @Override
-  public void write(OutputStream out, BHeader header, LFunction object) throws IOException {
+  public void write(OutputStream out, BHeader header, LuaFunction object) throws IOException {
     header.string.write(out, header, object.name);
     header.integer.write(out, header, new BInteger(object.linedefined));
     out.write(object.numUpvalues);
@@ -252,7 +252,7 @@ class LFunctionType51 extends LFunctionType {
   }
   
   @Override
-  public void write(OutputStream out, BHeader header, LFunction object) throws IOException {
+  public void write(OutputStream out, BHeader header, LuaFunction object) throws IOException {
     header.string.write(out, header, object.name);
     header.integer.write(out, header, new BInteger(object.linedefined));
     header.integer.write(out, header, new BInteger(object.lastlinedefined));
@@ -295,7 +295,7 @@ class LFunctionType52 extends LFunctionType {
   }
   
   @Override
-  public void write(OutputStream out, BHeader header, LFunction object) throws IOException {
+  public void write(OutputStream out, BHeader header, LuaFunction object) throws IOException {
     header.integer.write(out, header, new BInteger(object.linedefined));
     header.integer.write(out, header, new BInteger(object.lastlinedefined));
     out.write(object.numParams);
@@ -339,7 +339,7 @@ class LFunctionType53 extends LFunctionType {
   }
   
   @Override
-  public void write(OutputStream out, BHeader header, LFunction object) throws IOException {
+  public void write(OutputStream out, BHeader header, LuaFunction object) throws IOException {
     header.string.write(out, header, object.name);
     header.integer.write(out, header, new BInteger(object.linedefined));
     header.integer.write(out, header, new BInteger(object.lastlinedefined));
@@ -371,7 +371,7 @@ class LFunctionType54 extends LFunctionType {
   }
   
   @Override
-  protected void write_debug(OutputStream out, BHeader header, LFunction object) throws IOException {
+  protected void write_debug(OutputStream out, BHeader header, LuaFunction object) throws IOException {
     header.integer.write(out, header, new BInteger(object.lines.length));
     for(int i = 0; i < object.lines.length; i++) {
       out.write(object.lines[i]);
@@ -419,7 +419,7 @@ class LFunctionType54 extends LFunctionType {
   }
   
   @Override
-  public void write(OutputStream out, BHeader header, LFunction object) throws IOException {
+  public void write(OutputStream out, BHeader header, LuaFunction object) throws IOException {
     header.string.write(out, header, object.name);
     header.integer.write(out, header, new BInteger(object.linedefined));
     header.integer.write(out, header, new BInteger(object.lastlinedefined));

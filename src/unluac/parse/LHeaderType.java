@@ -18,6 +18,11 @@ abstract public class LHeaderType extends BObjectType<LHeader> {
     public static final LHeaderType TYPE52 = new LHeaderType52();
     public static final LHeaderType TYPE53 = new LHeaderType53();
     public static final LHeaderType TYPE54 = new LHeaderType54();
+    protected static final int TEST_INTEGER = 0x5678;
+    protected static final double TEST_FLOAT = 370.5;
+    private static final byte[] luacTail = {
+            0x19, (byte) 0x93, 0x0D, 0x0A, 0x1A, 0x0A,
+    };
 
     public static LHeaderType get(Version.HeaderType type) {
         switch (type) {
@@ -34,36 +39,6 @@ abstract public class LHeaderType extends BObjectType<LHeader> {
             default:
                 throw new IllegalStateException();
         }
-    }
-
-    private static final byte[] luacTail = {
-            0x19, (byte) 0x93, 0x0D, 0x0A, 0x1A, 0x0A,
-    };
-
-    protected static final int TEST_INTEGER = 0x5678;
-
-    protected static final double TEST_FLOAT = 370.5;
-
-    protected static class LHeaderParseState {
-        BIntegerType integer;
-        BIntegerType sizeT;
-        LNumberType number;
-        LNumberType linteger;
-        LNumberType lfloat;
-
-        int format;
-        LHeader.LEndianness endianness;
-
-        int lNumberSize;
-        boolean lNumberIntegrality;
-
-        int lIntegerSize;
-        int lFloatSize;
-
-        int sizeOp;
-        int sizeA;
-        int sizeB;
-        int sizeC;
     }
 
     @Override
@@ -279,6 +254,28 @@ abstract public class LHeaderType extends BObjectType<LHeader> {
         }
     }
 
+    protected static class LHeaderParseState {
+        BIntegerType integer;
+        BIntegerType sizeT;
+        LNumberType number;
+        LNumberType linteger;
+        LNumberType lfloat;
+
+        int format;
+        LHeader.LEndianness endianness;
+
+        int lNumberSize;
+        boolean lNumberIntegrality;
+
+        int lIntegerSize;
+        int lFloatSize;
+
+        int sizeOp;
+        int sizeA;
+        int sizeB;
+        int sizeC;
+    }
+
 }
 
 class LHeaderType50 extends LHeaderType {
@@ -344,9 +341,10 @@ class LHeaderType51 extends LHeaderType {
         parse_int_size(buffer, header, s);
         parse_size_t_size(buffer, header, s);
         parse_instruction_size(buffer, header, s);
+        header.setX64(false);
         if (8 == buffer.get()) {
             buffer.position(buffer.position() - 1);
-            header.x64 = true;
+            header.setX64(true);
             parse_integer_size(buffer, header, s);
             parse_float_size(buffer, header, s);
             s.linteger = new LNumberType(s.lIntegerSize, true, LNumberType.NumberMode.MODE_INTEGER);

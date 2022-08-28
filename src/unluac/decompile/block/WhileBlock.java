@@ -8,7 +8,7 @@ import unluac.decompile.Walker;
 import unluac.decompile.condition.Condition;
 import unluac.decompile.expression.Expression;
 import unluac.decompile.statement.Statement;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 abstract public class WhileBlock extends ContainerBlock {
 
@@ -16,7 +16,7 @@ abstract public class WhileBlock extends ContainerBlock {
   
   private Expression condexpr;
   
-  public WhileBlock(LFunction function, Condition cond, int begin, int end, CloseType closeType, int closeLine) {
+  public WhileBlock(LuaFunction function, Condition cond, int begin, int end, CloseType closeType, int closeLine) {
     super(function, begin, end, closeType, closeLine, -1);
     this.cond = cond;
   }

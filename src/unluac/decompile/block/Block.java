@@ -8,11 +8,11 @@ import unluac.decompile.Decompiler;
 import unluac.decompile.Registers;
 import unluac.decompile.operation.Operation;
 import unluac.decompile.statement.Statement;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 abstract public class Block extends Statement implements Comparable<Block> {
 
-  protected final LFunction function;
+  protected final LuaFunction function;
   public int begin;
   public int end;
   public int closeRegister;
@@ -20,7 +20,7 @@ abstract public class Block extends Statement implements Comparable<Block> {
   public boolean loopRedirectAdjustment = false;
   protected boolean scopeUsed = false;
   
-  public Block(LFunction function, int begin, int end, int priority) {
+  public Block(LuaFunction function, int begin, int end, int priority) {
     this.function = function;
     this.begin = begin;
     this.end = end;

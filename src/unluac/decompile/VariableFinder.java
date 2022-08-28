@@ -3,7 +3,7 @@ package unluac.decompile;
 import java.util.ArrayList;
 import java.util.List;
 
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 import unluac.parse.LUpvalue;
 
 public class VariableFinder {
@@ -213,7 +213,7 @@ public class VariableFinder {
           states.setRead(B, line);
           break;
         case CLOSURE: {
-          LFunction f = d.function.functions[code.Bx(line)];
+          LuaFunction f = d.function.functions[code.Bx(line)];
           for(LUpvalue upvalue : f.upvalues) {
             if(upvalue.instack) {
               states.setLocalRead(upvalue.idx, line);

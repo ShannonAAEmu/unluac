@@ -33,7 +33,7 @@ import unluac.decompile.condition.FinalSetCondition;
 import unluac.decompile.condition.FixedCondition;
 import unluac.decompile.condition.OrCondition;
 import unluac.decompile.condition.TestCondition;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 import unluac.util.Stack;
 
 public class ControlFlowHandler {
@@ -82,7 +82,7 @@ public class ControlFlowHandler {
   
   private static class State {
     public Decompiler d;
-    public LFunction function;
+    public LuaFunction function;
     public Registers r;
     public Code code;
     public Branch begin_branch;

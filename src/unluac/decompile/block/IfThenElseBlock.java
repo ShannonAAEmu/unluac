@@ -8,7 +8,7 @@ import unluac.decompile.Walker;
 import unluac.decompile.condition.Condition;
 import unluac.decompile.expression.Expression;
 import unluac.decompile.statement.Statement;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class IfThenElseBlock extends ContainerBlock {
 
@@ -18,7 +18,7 @@ public class IfThenElseBlock extends ContainerBlock {
   
   private Expression condexpr;
   
-  public IfThenElseBlock(LFunction function, Condition cond, int begin, int end, int elseTarget, CloseType closeType, int closeLine) {
+  public IfThenElseBlock(LuaFunction function, Condition cond, int begin, int end, int elseTarget, CloseType closeType, int closeLine) {
     super(function, begin, end, closeType, closeLine, -1);
     this.cond = cond;
     this.elseTarget = elseTarget;

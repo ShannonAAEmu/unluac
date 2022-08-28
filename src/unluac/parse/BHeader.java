@@ -8,10 +8,10 @@ import unluac.decompile.Op;
 import unluac.decompile.OpcodeMap;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,15 +43,15 @@ public class BHeader {
     public final CodeExtract extractor;
     public final OpcodeMap opmap;
 
-    public final LFunction main;
+    public final LuaFunction main;
 
-    public boolean x64;
+    private boolean x64;
 
     public BHeader(Version version, LHeader lheader) {
         this(version, lheader, null);
     }
 
-    public BHeader(Version version, LHeader lheader, LFunction main) {
+    public BHeader(Version version, LHeader lheader, LuaFunction main) {
         this.config = null;
         this.version = version;
         this.lheader = lheader;
@@ -76,8 +76,8 @@ public class BHeader {
     public BHeader(ByteBuffer buffer, Configuration config) {
         this.config = config;
         // 4 byte Lua signature
-        for (int i = 0; i < signature.length; i++) {
-            if (buffer.get() != signature[i]) {
+        for (byte b : signature) {
+            if (buffer.get() != b) {
                 throw new IllegalStateException("The input file does not have the signature of a valid Lua file.");
             }
         }
@@ -87,9 +87,6 @@ public class BHeader {
         int minor = versionNumber & 0x0F;
 
         version = Version.getVersion(major, minor);
-        if (version == null) {
-            throw new IllegalStateException("The input chunk's Lua version is " + major + "." + minor + "; unluac can only handle Lua 5.0 - Lua 5.4.");
-        }
 
         lheader_type = version.getLHeaderType();
         lheader = lheader_type.parse(buffer, this);
@@ -107,9 +104,9 @@ public class BHeader {
         function = lheader.function;
         extractor = lheader.extractor;
 
-        if (config.opmap != null) {
+        if (config.opMap != null) {
             try {
-                Tokenizer t = new Tokenizer(new FileInputStream(new File(config.opmap)));
+                Tokenizer t = new Tokenizer(Files.newInputStream(new File(config.opMap).toPath()));
                 String tok;
                 Map<Integer, Op> useropmap = new HashMap<Integer, Op>();
                 while ((tok = t.next()) != null) {
@@ -173,4 +170,11 @@ public class BHeader {
         function.write(out, this, main);
     }
 
+    public boolean isX64() {
+        return x64;
+    }
+
+    public void setX64(boolean x64) {
+        this.x64 = x64;
+    }
 }

@@ -8,7 +8,7 @@ import java.nio.channels.FileChannel;
 
 import unluac.Configuration;
 import unluac.parse.BHeader;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 import unluac.parse.LLocal;
 import unluac.parse.LObject;
 
@@ -30,12 +30,12 @@ public class Compare {
    * (except possibly for line numbers).
    */
   public boolean bytecode_equal(String file1, String file2) {
-    LFunction main1 = file_to_function(file1);
-    LFunction main2 = file_to_function(file2);
+    LuaFunction main1 = file_to_function(file1);
+    LuaFunction main2 = file_to_function(file2);
     return function_equal(main1, main2);
   }
 
-  public boolean function_equal(LFunction f1, LFunction f2) {
+  public boolean function_equal(LuaFunction f1, LuaFunction f2) {
     if(f1.maximumStackSize != f2.maximumStackSize) {
       return false;
     }
@@ -140,7 +140,7 @@ public class Compare {
     return true;
   }
   
-  public LFunction file_to_function(String filename) {
+  public LuaFunction file_to_function(String filename) {
     RandomAccessFile file = null;
     try {
       file = new RandomAccessFile(filename, "r");

@@ -6,7 +6,7 @@ import unluac.decompile.Function;
 import unluac.decompile.Output;
 import unluac.decompile.expression.ConstantExpression;
 import unluac.decompile.statement.Statement;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class AlwaysLoop extends ContainerBlock {
   
@@ -14,7 +14,7 @@ public class AlwaysLoop extends ContainerBlock {
   
   private ConstantExpression condition;
   
-  public AlwaysLoop(LFunction function, int begin, int end, CloseType closeType, int closeLine, boolean repeat) {
+  public AlwaysLoop(LuaFunction function, int begin, int end, CloseType closeType, int closeLine, boolean repeat) {
     super(function, begin, end, closeType, closeLine, 0);
     this.repeat = repeat;
     condition = null;

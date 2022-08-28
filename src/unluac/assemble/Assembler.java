@@ -24,7 +24,7 @@ import unluac.parse.LAbsLineInfoType;
 import unluac.parse.LBoolean;
 import unluac.parse.LBooleanType;
 import unluac.parse.LConstantType;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 import unluac.parse.LFunctionType;
 import unluac.parse.LHeader;
 import unluac.parse.LLocal;
@@ -627,13 +627,13 @@ class AssemblerChunk {
     
     LHeader lheader = new LHeader(format, endianness, integer, sizeT, bool, number, linteger, lfloat, string, constant, abslineinfo, local, upvalue, function, extract);
     BHeader header = new BHeader(version, lheader);
-    LFunction main = convert_function(header, this.main);
+    LuaFunction main = convert_function(header, this.main);
     header = new BHeader(version, lheader, main);
     
     header.write(out);
   }
   
-  private LFunction convert_function(BHeader header, AssemblerFunction function) {
+  private LuaFunction convert_function(BHeader header, AssemblerFunction function) {
     int i;
     int[] code = new int[function.code.size()];
     i = 0;
@@ -695,12 +695,12 @@ class AssemblerChunk {
       lup.instack = upvalue.instack;
       upvalues[i++] = lup;
     }
-    LFunction[] functions = new LFunction[function.children.size()];
+    LuaFunction[] functions = new LuaFunction[function.children.size()];
     i = 0;
     for(AssemblerFunction f : function.children) {
       functions[i++] = convert_function(header, f);
     }
-    return new LFunction(
+    return new LuaFunction(
       header,
       convert_string(header, function.source),
       function.linedefined,

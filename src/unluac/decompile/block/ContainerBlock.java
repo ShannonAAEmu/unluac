@@ -6,7 +6,7 @@ import java.util.List;
 import unluac.decompile.CloseType;
 import unluac.decompile.Walker;
 import unluac.decompile.statement.Statement;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 abstract public class ContainerBlock extends Block {
 
@@ -15,7 +15,7 @@ abstract public class ContainerBlock extends Block {
   protected final int closeLine;
   protected boolean usingClose;
   
-  public ContainerBlock(LFunction function, int begin, int end, CloseType closeType, int closeLine, int priority) {
+  public ContainerBlock(LuaFunction function, int begin, int end, CloseType closeType, int closeLine, int priority) {
     super(function, begin, end, priority);
     this.closeType = closeType;
     this.closeLine = closeLine;

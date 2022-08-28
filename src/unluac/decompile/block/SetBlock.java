@@ -14,7 +14,7 @@ import unluac.decompile.expression.Expression;
 import unluac.decompile.operation.Operation;
 import unluac.decompile.statement.Assignment;
 import unluac.decompile.statement.Statement;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class SetBlock extends Block {
   
@@ -24,7 +24,7 @@ public class SetBlock extends Block {
   private Registers r;
   private boolean finalize = false;
   
-  public SetBlock(LFunction function, Condition cond, int target, int line, int begin, int end, Registers r) {
+  public SetBlock(LuaFunction function, Condition cond, int target, int line, int begin, int end, Registers r) {
     super(function, begin, end, 2);
     if(begin == end) throw new IllegalStateException();
     this.target = target;

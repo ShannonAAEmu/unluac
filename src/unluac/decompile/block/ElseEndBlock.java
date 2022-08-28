@@ -4,13 +4,13 @@ import unluac.decompile.CloseType;
 import unluac.decompile.Decompiler;
 import unluac.decompile.Output;
 import unluac.decompile.statement.Statement;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class ElseEndBlock extends ContainerBlock {
 
   public IfThenElseBlock partner;
   
-  public ElseEndBlock(LFunction function, int begin, int end, CloseType closeType, int closeLine) {
+  public ElseEndBlock(LuaFunction function, int begin, int end, CloseType closeType, int closeLine) {
     super(function, begin, end, closeType, closeLine, -1);
   }
   

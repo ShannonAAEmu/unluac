@@ -8,7 +8,7 @@ import unluac.decompile.Walker;
 import unluac.decompile.condition.Condition;
 import unluac.decompile.expression.Expression;
 import unluac.decompile.statement.Statement;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class RepeatBlock extends ContainerBlock {
 
@@ -18,7 +18,7 @@ public class RepeatBlock extends ContainerBlock {
   
   private Expression condexpr;
   
-  public RepeatBlock(LFunction function, Condition cond, int begin, int end, CloseType closeType, int closeLine, boolean extendedRepeatScope, int scopeEnd) {
+  public RepeatBlock(LuaFunction function, Condition cond, int begin, int end, CloseType closeType, int closeLine, boolean extendedRepeatScope, int scopeEnd) {
     super(function, begin, end, closeType, closeLine, 0);
     this.cond = cond;
     this.extendedRepeatScope = extendedRepeatScope;

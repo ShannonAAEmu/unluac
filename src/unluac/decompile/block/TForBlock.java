@@ -11,7 +11,7 @@ import unluac.decompile.Walker;
 import unluac.decompile.expression.Expression;
 import unluac.decompile.statement.Statement;
 import unluac.decompile.target.Target;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class TForBlock extends ContainerBlock {
 
@@ -32,7 +32,7 @@ public class TForBlock extends ContainerBlock {
   private Target[] targets;
   private Expression[] values;
   
-  public static TForBlock make50(LFunction function, int begin, int end, int register, int length, boolean innerClose) {
+  public static TForBlock make50(LuaFunction function, int begin, int end, int register, int length, boolean innerClose) {
     int innerScopeEnd = end - 3;
     if(innerClose) {
       innerScopeEnd--;
@@ -46,7 +46,7 @@ public class TForBlock extends ContainerBlock {
     );
   }
   
-  public static TForBlock make51(LFunction function, int begin, int end, int register, int length, boolean forvarClose, boolean innerClose) {
+  public static TForBlock make51(LuaFunction function, int begin, int end, int register, int length, boolean forvarClose, boolean innerClose) {
     int explicitScopeEnd = end - 3;
     int innerScopeEnd = end - 3;
     if(forvarClose) {
@@ -65,7 +65,7 @@ public class TForBlock extends ContainerBlock {
     );
   }
   
-  public static TForBlock make54(LFunction function, int begin, int end, int register, int length, boolean forvarClose) {
+  public static TForBlock make54(LuaFunction function, int begin, int end, int register, int length, boolean forvarClose) {
     int innerScopeEnd = end - 3;
     if(forvarClose) {
       innerScopeEnd--;
@@ -79,12 +79,12 @@ public class TForBlock extends ContainerBlock {
     );
   }
   
-  public TForBlock(LFunction function, int begin, int end,
-    int internalRegisterFirst, int internalRegisterLast,
-    int explicitRegisterFirst, int explicitRegisterLast,
-    int internalScopeBegin, int internalScopeEnd,
-    int explicitScopeBegin, int explicitScopeEnd,
-    int innerScopeEnd
+  public TForBlock(LuaFunction function, int begin, int end,
+                   int internalRegisterFirst, int internalRegisterLast,
+                   int explicitRegisterFirst, int explicitRegisterLast,
+                   int internalScopeBegin, int internalScopeEnd,
+                   int explicitScopeBegin, int explicitScopeEnd,
+                   int innerScopeEnd
   ) {
     super(function, begin, end, CloseType.NONE, -1, -1);
     this.internalRegisterFirst = internalRegisterFirst;
