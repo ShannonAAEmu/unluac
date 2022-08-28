@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="unluac:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/unluac_jar</output-path>
+    <root id="archive" name="unluac.jar">
+      <element id="module-output" name="unluac" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/flatlaf-2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/commons-io-2.11.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

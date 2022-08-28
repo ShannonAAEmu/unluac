@@ -5,7 +5,6 @@
 package unluac.gui;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import org.apache.commons.io.FilenameUtils;
 import unluac.Configuration;
 import unluac.Main;
 import unluac.entity.AlbFile;
@@ -16,7 +15,10 @@ import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,12 +28,13 @@ import java.util.Objects;
 public class Gui extends JFrame {
 
     private final String[] argsArray;
+    private final byte[] luaHeaderBytes = {27, 76, 117, 97};
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JPanel mainPanel;
     private JLabel settingsLabel;
     private JLabel dragDropLabel;
-    private JComboBox argsComboBox;
+    private JComboBox<String> argsComboBox;
     private JCheckBox overwriteCheckBox;
     private JCheckBox autoCloseCheckBox;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
@@ -94,7 +97,7 @@ public class Gui extends JFrame {
             {
                 // compute preferred size
                 Dimension preferredSize = new Dimension();
-                for(int i = 0; i < mainPanel.getComponentCount(); i++) {
+                for (int i = 0; i < mainPanel.getComponentCount(); i++) {
                     Rectangle bounds = mainPanel.getComponent(i).getBounds();
                     preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                     preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -112,7 +115,7 @@ public class Gui extends JFrame {
         {
             // compute preferred size
             Dimension preferredSize = new Dimension();
-            for(int i = 0; i < contentPane.getComponentCount(); i++) {
+            for (int i = 0; i < contentPane.getComponentCount(); i++) {
                 Rectangle bounds = contentPane.getComponent(i).getBounds();
                 preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                 preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -165,11 +168,12 @@ public class Gui extends JFrame {
         settingsLabel.setEnabled(isEnable);
         argsComboBox.setEnabled(isEnable);
         overwriteCheckBox.setEnabled(isEnable);
+        autoCloseCheckBox.setEnabled(isEnable);
     }
 
-    private void analyseDragDropFiles(List<File> dragDropFiles) {
+    private void analyseDragDropFiles(List<File> dragDropFiles) throws IOException {
         for (File dragDropFile : dragDropFiles) {
-            if (dragDropFile.isFile()) {
+            if (dragDropFile.isFile() && isValidHeader(dragDropFile)) {
                 addOnlyCompiledFile(dragDropFile);
                 continue;
             }
@@ -179,11 +183,11 @@ public class Gui extends JFrame {
         }
     }
 
-    private void getFileFromDirectory(File directory) {
+    private void getFileFromDirectory(File directory) throws IOException {
         File[] inDirectoryFiles = Objects.requireNonNull(directory.listFiles());
         if (0 < inDirectoryFiles.length) {
             for (File inDirectoryFile : inDirectoryFiles) {
-                if (inDirectoryFile.isFile()) {
+                if (inDirectoryFile.isFile() && isValidHeader(inDirectoryFile)) {
                     addOnlyCompiledFile(inDirectoryFile);
                     continue;
                 }
@@ -194,11 +198,20 @@ public class Gui extends JFrame {
         }
     }
 
-    private void addOnlyCompiledFile(File file) {
-        if (FilenameUtils.getExtension(file.getName()).equals("alb")) {
-            AlbFile albFile = new AlbFile(file, String.valueOf(argsComboBox.getSelectedItem()), overwriteCheckBox.isSelected());
-            albFileList.add(albFile);
+    private boolean isValidHeader(File file) throws IOException {
+        try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r")) {
+            if (4 <= randomAccessFile.length()) {
+                byte[] headerBytes = new byte[4];
+                randomAccessFile.read(headerBytes);
+                return Arrays.equals(luaHeaderBytes, headerBytes);
+            }
+            return false;
         }
+    }
+
+    private void addOnlyCompiledFile(File file) {
+        AlbFile albFile = new AlbFile(file, String.valueOf(argsComboBox.getSelectedItem()), overwriteCheckBox.isSelected());
+        albFileList.add(albFile);
     }
 
     private void initArgsComboBox() {

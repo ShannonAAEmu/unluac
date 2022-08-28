@@ -1,4 +1,4 @@
 tehtmi -- main developer
 Thomas Klaeger -- added support for Lua 5.0
 John Fowler -- contributed a patch fixing an issue with closures in always loops
-ShannonAAEmu -- added support x64 compilation
+ShannonAAEmu -- added support x64 compilation and GUI

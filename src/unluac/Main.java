@@ -155,8 +155,8 @@ public class Main {
         System.exit(1);
     }
 
-    private static LuaFunction fileToFunction(String fn, Configuration config) throws IOException {
-        try (RandomAccessFile file = new RandomAccessFile(fn, "r")) {
+    private static LuaFunction fileToFunction(String fileName, Configuration config) throws IOException {
+        try (RandomAccessFile file = new RandomAccessFile(fileName, "r")) {
             ByteBuffer buffer = ByteBuffer.allocate((int) file.length());
             buffer.order(ByteOrder.LITTLE_ENDIAN);
             int len = (int) file.length();
