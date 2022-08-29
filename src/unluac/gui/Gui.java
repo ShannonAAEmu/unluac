@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @author unknown
+ * @author ShannonAAEmu
  */
 public class Gui extends JFrame {
 
@@ -32,9 +32,9 @@ public class Gui extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JPanel mainPanel;
-    private JLabel settingsLabel;
     private JLabel dragDropLabel;
-    private JComboBox<String> argsComboBox;
+    private JLabel settingsLabel;
+    private JComboBox argsComboBox;
     private JCheckBox overwriteCheckBox;
     private JCheckBox autoCloseCheckBox;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
@@ -45,59 +45,69 @@ public class Gui extends JFrame {
         this.argsArray = argsArray;
         this.albFileList = new ArrayList<>();
         FlatDarkLaf.setup();
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        UIManager.put("JFrame.activeTitleBackground", Color.red);
         initComponents();
         initFileDragDrop();
         initArgsComboBox();
+        setSize(new Dimension(396, 394));
+        setTitle("revision: " + Main.revision);
+        setIconImage(new ImageIcon(new ImageIcon(Objects.requireNonNull(Gui.class.getResource("/aa.png"))).getImage()).getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         mainPanel = new JPanel();
-        settingsLabel = new JLabel();
         dragDropLabel = new JLabel();
+        settingsLabel = new JLabel();
         argsComboBox = new JComboBox();
         overwriteCheckBox = new JCheckBox();
         autoCloseCheckBox = new JCheckBox();
 
         //======== this ========
+        setBackground(new Color(32, 32, 32));
         Container contentPane = getContentPane();
         contentPane.setLayout(null);
 
         //======== mainPanel ========
         {
+            mainPanel.setBackground(new Color(30, 31, 34));
             mainPanel.setLayout(null);
-
-            //---- settingsLabel ----
-            settingsLabel.setBorder(new LineBorder(Color.black, 1, true));
-            mainPanel.add(settingsLabel);
-            settingsLabel.setBounds(360, 10, 130, 300);
 
             //---- dragDropLabel ----
             dragDropLabel.setBorder(new LineBorder(Color.black, 1, true));
             dragDropLabel.setText("Drag & Drop");
             dragDropLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            dragDropLabel.setBackground(new Color(32, 32, 32));
             mainPanel.add(dragDropLabel);
-            dragDropLabel.setBounds(10, 10, 340, 300);
+            dragDropLabel.setBounds(10, 10, 370, 300);
+
+            //---- settingsLabel ----
+            settingsLabel.setBorder(new LineBorder(Color.black, 1, true));
+            settingsLabel.setBackground(new Color(32, 32, 32));
+            mainPanel.add(settingsLabel);
+            settingsLabel.setBounds(10, 315, 370, 35);
             mainPanel.add(argsComboBox);
-            argsComboBox.setBounds(370, 20, 110, 35);
+            argsComboBox.setBounds(15, 321, 110, 23);
 
             //---- overwriteCheckBox ----
             overwriteCheckBox.setText("Overwrite file(s)");
             mainPanel.add(overwriteCheckBox);
-            overwriteCheckBox.setBounds(370, 65, 110, overwriteCheckBox.getPreferredSize().height);
+            overwriteCheckBox.setBounds(145, 322, 110, overwriteCheckBox.getPreferredSize().height);
 
             //---- autoCloseCheckBox ----
             autoCloseCheckBox.setText("Auto close app");
             autoCloseCheckBox.setSelected(true);
             mainPanel.add(autoCloseCheckBox);
-            autoCloseCheckBox.setBounds(370, 100, 130, autoCloseCheckBox.getPreferredSize().height);
+            autoCloseCheckBox.setBounds(265, 322, 130, autoCloseCheckBox.getPreferredSize().height);
 
             {
                 // compute preferred size
                 Dimension preferredSize = new Dimension();
-                for (int i = 0; i < mainPanel.getComponentCount(); i++) {
+                for(int i = 0; i < mainPanel.getComponentCount(); i++) {
                     Rectangle bounds = mainPanel.getComponent(i).getBounds();
                     preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                     preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -110,12 +120,12 @@ public class Gui extends JFrame {
             }
         }
         contentPane.add(mainPanel);
-        mainPanel.setBounds(0, 0, 500, 320);
+        mainPanel.setBounds(0, 0, 390, 365);
 
         {
             // compute preferred size
             Dimension preferredSize = new Dimension();
-            for (int i = 0; i < contentPane.getComponentCount(); i++) {
+            for(int i = 0; i < contentPane.getComponentCount(); i++) {
                 Rectangle bounds = contentPane.getComponent(i).getBounds();
                 preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                 preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
