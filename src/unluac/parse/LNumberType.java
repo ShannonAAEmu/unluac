@@ -8,17 +8,10 @@ import java.nio.ByteBuffer;
 
 public class LNumberType extends BObjectType<LNumber> {
 
-    public static enum NumberMode {
-        MODE_NUMBER, // Used for Lua 5.0 - 5.2 where numbers can represent integers or floats
-        MODE_FLOAT, // Used for floats in Lua 5.3
-        MODE_INTEGER, // Used for integers in Lua 5.3
-    }
-
+    private static boolean isIntegral;
     public final int size;
     public final boolean integral;
     public final NumberMode mode;
-
-    public static boolean isIntegral;
 
     public LNumberType(int size, boolean integral, NumberMode mode) {
         if (isIntegral) {
@@ -32,6 +25,14 @@ public class LNumberType extends BObjectType<LNumber> {
         if (!(size == 4 || size == 8)) {
             throw new IllegalStateException("The input chunk has an unsupported Lua number size: " + size);
         }
+    }
+
+    public static boolean isIsIntegral() {
+        return isIntegral;
+    }
+
+    public static void setIsIntegral(boolean isIntegral) {
+        LNumberType.isIntegral = isIntegral;
     }
 
     public double convert(double number) {
@@ -143,4 +144,9 @@ public class LNumberType extends BObjectType<LNumber> {
         }
     }
 
+    public static enum NumberMode {
+        MODE_NUMBER, // Used for Lua 5.0 - 5.2 where numbers can represent integers or floats
+        MODE_FLOAT, // Used for floats in Lua 5.3
+        MODE_INTEGER, // Used for integers in Lua 5.3
+    }
 }

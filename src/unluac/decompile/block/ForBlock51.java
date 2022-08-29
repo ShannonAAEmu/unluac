@@ -3,11 +3,11 @@ package unluac.decompile.block;
 import unluac.Version;
 import unluac.decompile.CloseType;
 import unluac.decompile.Registers;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class ForBlock51 extends ForBlock {
 
-  public ForBlock51(LFunction function, int begin, int end, int register, CloseType closeType, int closeLine, boolean forvarClose) {
+  public ForBlock51(LuaFunction function, int begin, int end, int register, CloseType closeType, int closeLine, boolean forvarClose) {
     super(function, begin, end, register, closeType, closeLine, forvarClose);
   }
 

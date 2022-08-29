@@ -4,13 +4,13 @@ import unluac.decompile.Decompiler;
 import unluac.decompile.Output;
 import unluac.decompile.Walker;
 import unluac.decompile.statement.Statement;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class Goto extends Block {
 
   public final int target;
   
-  public Goto(LFunction function, int line, int target) {
+  public Goto(LuaFunction function, int line, int target) {
     super(function, line, line, 2);
     this.target = target;
   }

@@ -2,13 +2,13 @@ package unluac.decompile.block;
 
 import unluac.decompile.CloseType;
 import unluac.decompile.condition.Condition;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class WhileBlock51 extends WhileBlock {
 
   private final int unprotectedTarget;
   
-  public WhileBlock51(LFunction function, Condition cond, int begin, int end, int unprotectedTarget, CloseType closeType, int closeLine) {
+  public WhileBlock51(LuaFunction function, Condition cond, int begin, int end, int unprotectedTarget, CloseType closeType, int closeLine) {
     super(function, cond, begin, end, closeType, closeLine);
     this.unprotectedTarget = unprotectedTarget;
   }

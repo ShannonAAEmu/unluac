@@ -6,15 +6,15 @@ import unluac.decompile.Walker;
 import unluac.decompile.target.TableTarget;
 import unluac.decompile.target.Target;
 import unluac.decompile.target.VariableTarget;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 import unluac.parse.LUpvalue;
 
 public class ClosureExpression extends Expression {
 
-  private final LFunction function;
+  private final LuaFunction function;
   private int upvalueLine;
   
-  public ClosureExpression(LFunction function, int upvalueLine) {
+  public ClosureExpression(LuaFunction function, int upvalueLine) {
     super(PRECEDENCE_ATOMIC);
     this.function = function;
     this.upvalueLine = upvalueLine;

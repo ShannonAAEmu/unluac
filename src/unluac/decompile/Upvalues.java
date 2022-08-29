@@ -1,14 +1,14 @@
 package unluac.decompile;
 
 import unluac.decompile.expression.UpvalueExpression;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 import unluac.parse.LUpvalue;
 
 public class Upvalues {
 
   private final LUpvalue[] upvalues;
   
-  public Upvalues(LFunction func, Declaration[] parentDecls, int line) {
+  public Upvalues(LuaFunction func, Declaration[] parentDecls, int line) {
     this.upvalues = func.upvalues;
     for(LUpvalue upvalue : upvalues) {
       if(upvalue.name == null || upvalue.name.isEmpty()) {

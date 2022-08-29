@@ -4,14 +4,14 @@ import unluac.decompile.Decompiler;
 import unluac.decompile.Output;
 import unluac.decompile.Walker;
 import unluac.decompile.statement.Statement;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class Break extends Block {
 
   public final int target;
   public String comment;
   
-  public Break(LFunction function, int line, int target) {
+  public Break(LuaFunction function, int line, int target) {
     super(function, line, line, 2);
     this.target = target;
   }

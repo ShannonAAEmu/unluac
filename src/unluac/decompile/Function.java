@@ -3,7 +3,7 @@ package unluac.decompile;
 import unluac.Version;
 import unluac.decompile.expression.ConstantExpression;
 import unluac.decompile.expression.GlobalExpression;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class Function {
 
@@ -11,7 +11,7 @@ public class Function {
   private Constant[] constants;
   private final CodeExtract extract;
   
-  public Function(LFunction function) {
+  public Function(LuaFunction function) {
     version = function.header.version;
     constants = new Constant[function.constants.length];
     for(int i = 0; i < constants.length; i++) {

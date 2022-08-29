@@ -1,0 +1,70 @@
+JFDML JFormDesigner: "7.0.7.0.1134" Java: "17.0.3" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"background": new java.awt.Color( 32, 32, 32, 255 )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+				name: "mainPanel"
+				"background": new java.awt.Color( 30, 31, 34, 255 )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "dragDropLabel"
+					"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 1, true )
+					"text": "Drag & Drop"
+					"horizontalAlignment": 0
+					"background": new java.awt.Color( 32, 32, 32, 255 )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 10
+					"y": 10
+					"width": 370
+					"height": 300
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "settingsLabel"
+					"border": new javax.swing.border.LineBorder( sfield java.awt.Color black, 1, true )
+					"background": new java.awt.Color( 32, 32, 32, 255 )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"width": 370
+					"height": 35
+					"x": 10
+					"y": 315
+				} )
+				add( new FormComponent( "javax.swing.JComboBox" ) {
+					name: "argsComboBox"
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 15
+					"y": 321
+					"width": 110
+					"height": 23
+				} )
+				add( new FormComponent( "javax.swing.JCheckBox" ) {
+					name: "overwriteCheckBox"
+					"text": "Overwrite file(s)"
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 145
+					"y": 322
+					"width": 110
+				} )
+				add( new FormComponent( "javax.swing.JCheckBox" ) {
+					name: "autoCloseCheckBox"
+					"text": "Auto close app"
+					"selected": true
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 265
+					"y": 322
+					"width": 130
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 0
+				"y": 0
+				"height": 365
+				"width": 390
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 390, 390 )
+		} )
+	}
+}

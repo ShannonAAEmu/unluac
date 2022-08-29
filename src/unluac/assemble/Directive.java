@@ -5,7 +5,7 @@ import java.util.Map;
 
 import unluac.decompile.Output;
 import unluac.parse.BHeader;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 import unluac.parse.LHeader;
 
 enum DirectiveType {
@@ -79,7 +79,7 @@ public enum Directive {
     }
   }
   
-  public void disassemble(Output out, BHeader chunk, LFunction function) {
+  public void disassemble(Output out, BHeader chunk, LuaFunction function) {
     out.print(this.token + "\t");
     switch(this) {
     case SOURCE: out.println(function.name.toPrintString()); break;

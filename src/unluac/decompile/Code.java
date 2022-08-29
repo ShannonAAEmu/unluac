@@ -1,7 +1,7 @@
 package unluac.decompile;
 
 import unluac.Version;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 
 public class Code {
   
@@ -12,7 +12,7 @@ public class Code {
   private final boolean[] upvalue;
   public final int length;
   
-  public Code(LFunction function) {
+  public Code(LuaFunction function) {
     this.code = function.code;
     this.length = code.length;
     map = function.header.opmap;

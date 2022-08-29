@@ -2,23 +2,23 @@ package unluac.decompile;
 
 import unluac.assemble.Directive;
 import unluac.parse.LAbsLineInfo;
-import unluac.parse.LFunction;
+import unluac.parse.LuaFunction;
 import unluac.parse.LLocal;
 import unluac.parse.LUpvalue;
 import unluac.util.StringUtils;
 
 public class Disassembler {
 
-  private final LFunction function;
+  private final LuaFunction function;
   private final Code code;
   private final String name;
   private final String parent;
   
-  public Disassembler(LFunction function) {
+  public Disassembler(LuaFunction function) {
     this(function, "main", null);
   }
   
-  private Disassembler(LFunction function, String name, String parent) {
+  private Disassembler(LuaFunction function, String name, String parent) {
     this.function = function;
     this.code = new Code(function);
     this.name = name;
@@ -143,7 +143,7 @@ public class Disassembler {
     out.println();
     
     int subindex = 0;
-    for(LFunction child : function.functions) {
+    for(LuaFunction child : function.functions) {
       new Disassembler(child, "f" + subindex, fullname).disassemble(out, level + 1, subindex);
       subindex++;
     }
