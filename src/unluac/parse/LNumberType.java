@@ -8,31 +8,17 @@ import java.nio.ByteBuffer;
 
 public class LNumberType extends BObjectType<LNumber> {
 
-    private static boolean isIntegral;
     public final int size;
     public final boolean integral;
     public final NumberMode mode;
 
     public LNumberType(int size, boolean integral, NumberMode mode) {
-        if (isIntegral) {
-            this.size = 8;
-            this.integral = true;
-        } else {
-            this.size = size;
-            this.integral = integral;
-        }
+        this.size = size;
+        this.integral = integral;
         this.mode = mode;
         if (!(size == 4 || size == 8)) {
             throw new IllegalStateException("The input chunk has an unsupported Lua number size: " + size);
         }
-    }
-
-    public static boolean isIsIntegral() {
-        return isIntegral;
-    }
-
-    public static void setIsIntegral(boolean isIntegral) {
-        LNumberType.isIntegral = isIntegral;
     }
 
     public double convert(double number) {
